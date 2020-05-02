@@ -1,0 +1,32 @@
+version: '3'
+services:
+  # 定义php-fpm容器
+  php-fpm:
+    image: nanoninja/php-fpm
+    volumes:
+      - "/Users/hujing/dir:/Users/hujing/dir"
+    restart: always
+    depends_on:
+      - mysql
+  # 定义nginx容器
+  nginx:
+    image: nginx
+    depends_on:
+      - php-fpm
+    volumes:
+      - "./config/nginx/config:/etc/nginx/conf.d"
+      - "/etc/hosts:/etc/hosts"
+      - "/Users/hujing/dir:/Users/hujing/dir"
+      - "./config/nginx/log:/var/log/nginx"
+    ports:
+      - "80:80"
+    restart: always
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ".config/mysql/data:/var/lib/mysql"
+      - ".config/mysql/config:/etc/mysql/conf.d"
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
