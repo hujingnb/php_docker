@@ -47,3 +47,10 @@ services:
     # 指定配置文件启动redis
     command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
     restart: always
+  golang:
+    image: golang
+    container_name: golang
+    volumes:
+      - "/Users/hujing/dir:/Users/hujing/dir"
+    tty: true
+    restart: always
